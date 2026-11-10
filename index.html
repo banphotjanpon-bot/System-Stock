@@ -41,8 +41,14 @@ label{display:block;margin:10px 0 4px;font-size:13px;color:var(--mu);font-weight
 .tab.on{background:var(--pr);color:var(--prt);border-color:var(--pr);font-weight:600}
 .tab.on:hover{color:var(--prt)}
 /* alert */
-.alert{background:var(--erb);color:var(--er);border:1px solid var(--er);border-left-width:5px;border-radius:12px;padding:12px 14px;margin:0 0 14px;display:none;line-height:1.7}
-.alert b{display:block;margin-bottom:2px}
+.alert{background:var(--card);border:1px solid var(--bd);border-left:5px solid var(--er);border-radius:12px;padding:10px 14px;margin:0 0 14px;display:none;box-shadow:var(--sh)}
+.alert-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.al-title{font-weight:700;margin-right:4px}.al-hint{color:var(--mu);font-size:12px}
+.chip{border:none;border-radius:99px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.chip.er{background:var(--erb);color:var(--er)}.chip.wn{background:var(--wnb);color:var(--wn)}
+.chip.er:hover{color:var(--er);filter:brightness(.96)}.chip.wn:hover{color:var(--wn);filter:brightness(.96)}
+.kpi.go{cursor:pointer}.kpi.go:hover{border-color:var(--pr)}
+.leg a{color:var(--pr);text-decoration:none;font-weight:600}
 /* toolbar */
 .bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
 .bar input:not([type=checkbox]){flex:1;min-width:150px}
@@ -55,8 +61,10 @@ label{display:block;margin:10px 0 4px;font-size:13px;color:var(--mu);font-weight
 .badge.ok{background:var(--okb);color:var(--ok)}.badge.low{background:var(--wnb);color:var(--wn)}.badge.out{background:var(--erb);color:var(--er)}
 .act{display:flex;gap:6px;flex-wrap:wrap}.act button{padding:6px 11px;font-size:13px}
 .act button[data-m="in"]{color:var(--ok);background:var(--okb);border-color:transparent}
+.act button[data-m="writeoff"]{color:var(--er);border-color:var(--er);background:none}
 .act button[data-m="out"]{color:var(--er);background:var(--erb);border-color:transparent}
 .low-t{color:var(--wn);font-weight:600}.out-t{color:var(--er);font-weight:600}
+.card.st-none{border-left-color:var(--bd)}.badge.none{background:var(--bg);color:var(--mu)}
 /* log table */
 .scroll{overflow-x:auto;background:var(--card);border:1px solid var(--bd);border-radius:14px;box-shadow:var(--sh)}
 table{width:100%;border-collapse:collapse}
@@ -153,7 +161,7 @@ dialog input,dialog select,#login input,#onboard input{width:100%}
   <section id="dash"></section>
 
   <section id="stock" hidden>
-    <div class="bar"><input id="q" placeholder="ค้นหาชื่อ / รหัสสินค้า"><select id="flt"><option value="all">ทั้งหมด</option><option value="low">ใกล้หมด/หมด</option><option value="exp">ใกล้หมดอายุ/หมดอายุ</option></select><label style="display:flex;align-items:center;gap:4px;margin:0;color:var(--tx)"><input type="checkbox" id="showOff" style="width:auto;flex:none">ปิดใช้งาน</label><button id="expStock">⬇ CSV</button><button class="pri" id="add">+ เพิ่มสินค้า</button></div>
+    <div class="bar"><input id="q" placeholder="ค้นหาชื่อ / รหัสสินค้า"><select id="flt"><option value="all">ทั้งหมด</option><option value="alert">ใกล้หมด + หมด</option><option value="out">สต็อกหมด</option><option value="low">ใกล้หมด</option><option value="exp">หมดอายุ + ใกล้หมดอายุ</option><option value="expd">หมดอายุแล้ว</option><option value="exps">ใกล้หมดอายุ</option></select><label style="display:flex;align-items:center;gap:4px;margin:0;color:var(--tx)"><input type="checkbox" id="showOff" style="width:auto;flex:none">ปิดใช้งาน</label><button id="expStock">⬇ CSV</button><button class="pri" id="add">+ เพิ่มสินค้า</button></div>
     <div id="list"><div class="msg">กำลังโหลด...</div></div>
   </section>
   <section id="team" hidden></section>
@@ -164,11 +172,13 @@ dialog input,dialog select,#login input,#onboard input{width:100%}
   </section>
 </div>
 
+<datalist id="locList"><option value="A1 (1)"><option value="B1 (1)"><option value="C1 (1)"><option value="D1 (1)"><option value="E1 (1)"><option value="F1 (1)"><option value="A2 (1)"><option value="B2 (1)"><option value="C2 (1)"><option value="D2 (1)"><option value="E2 (1)"><option value="F2 (1)"><option value="A3 (1)"><option value="B3 (1)"><option value="C3 (1)"><option value="D3 (1)"><option value="E3 (1)"><option value="F3 (1)"><option value="A4 (1)"><option value="B4 (1)"><option value="C4 (1)"><option value="D4 (1)"><option value="E4 (1)"><option value="F4 (1)"><option value="A1 (2)"><option value="B1 (2)"><option value="C1 (2)"><option value="D1 (2)"><option value="A2 (2)"><option value="B2 (2)"><option value="C2 (2)"><option value="D2 (2)"><option value="A3 (2)"><option value="B3 (2)"><option value="C3 (2)"><option value="D3 (2)"><option value="A4 (2)"><option value="B4 (2)"><option value="C4 (2)"><option value="D4 (2)"><option value="ห้องเก็บความเย็น"><option value="พาเลท"></datalist>
 <dialog id="dNew"><h3 style="margin:0">เพิ่มสินค้า</h3>
   <label>ชื่อสินค้า</label><input id="nName"><label>รหัส (SKU)</label><input id="nSku">
-  <label>หน่วย</label><select id="nUnit"><option>ชิ้น</option><option>เม็ด</option><option>อัน</option><option>แพ็ค</option><option>กล่อง</option></select><label>จำนวนเริ่มต้น (ล็อตแรก)</label><input id="nQty" type="number" min="0" value="0" inputmode="numeric">
+  <label>หน่วย</label><select id="nUnit"><option>ชิ้น</option><option>เม็ด</option><option>อัน</option><option>แพ็ค</option><option>กล่อง</option><option>ขวด</option><option>amp</option><option>vial</option><option>ม้วน</option><option>กระปุก</option><option>แกลลอน</option><option>หลอด</option><option>เซ็ต</option><option>เครื่อง</option><option>คู่</option><option>ห่อ</option><option>ซอง</option><option>ชุด</option><option>เส้น</option><option>ท่อ</option></select><label>จำนวนเริ่มต้น (ล็อตแรก)</label><input id="nQty" type="number" min="0" value="0" inputmode="numeric">
   <label>แจ้งเตือนเมื่อเหลือ ≤</label><input id="nMin" type="number" min="0" value="5" inputmode="numeric">
-  <label>ตำแหน่งที่วาง</label><input id="nLoc" placeholder="เช่น ตู้ A ชั้น 2">
+  <label>ตำแหน่งที่วาง</label><input id="nLoc" list="locList" placeholder="เช่น A1 (1)">
+  <label>หมายเหตุสินค้า</label><input id="nNote" placeholder="เช่น ไม่ Stock, ยาโครงการ">
   <label>วันหมดอายุ ล็อตแรก</label><input id="nE1" type="date">
   <label>วันหมดอายุ ล็อตที่ 2 (รับมาใหม่)</label><input id="nE2" type="date">
   <label>จำนวนล็อตที่ 2</label><input id="nQ2" type="number" min="0" value="0" inputmode="numeric">
@@ -177,8 +187,9 @@ dialog input,dialog select,#login input,#onboard input{width:100%}
 
 <dialog id="dEdit"><h3 style="margin:0">แก้ไขสินค้า</h3>
   <label>ชื่อสินค้า</label><input id="eName"><label>รหัส (SKU)</label><input id="eSku">
-  <label>หน่วย</label><select id="eUnit"><option>ชิ้น</option><option>เม็ด</option><option>อัน</option><option>แพ็ค</option><option>กล่อง</option></select><label>แจ้งเตือนเมื่อเหลือ ≤</label><input id="eMin" type="number" min="0" inputmode="numeric">
-  <label>ตำแหน่งที่วาง</label><input id="eLoc" placeholder="เช่น ตู้ A ชั้น 2">
+  <label>หน่วย</label><select id="eUnit"><option>ชิ้น</option><option>เม็ด</option><option>อัน</option><option>แพ็ค</option><option>กล่อง</option><option>ขวด</option><option>amp</option><option>vial</option><option>ม้วน</option><option>กระปุก</option><option>แกลลอน</option><option>หลอด</option><option>เซ็ต</option><option>เครื่อง</option><option>คู่</option><option>ห่อ</option><option>ซอง</option><option>ชุด</option><option>เส้น</option><option>ท่อ</option></select><label>แจ้งเตือนเมื่อเหลือ ≤</label><input id="eMin" type="number" min="0" inputmode="numeric">
+  <label>ตำแหน่งที่วาง</label><input id="eLoc" list="locList" placeholder="เช่น A1 (1)">
+  <label>หมายเหตุสินค้า</label><input id="eNote">
   <label>วันหมดอายุ ล็อตแรก</label><input id="eE1" type="date">
   <label>จำนวนล็อตแรก</label><input id="eQ1" type="number" min="0" inputmode="numeric">
   <label>วันหมดอายุ ล็อตที่ 2 (รับมาใหม่)</label><input id="eE2" type="date">
@@ -201,7 +212,7 @@ dialog input,dialog select,#login input,#onboard input{width:100%}
 <script>
 // ===== ตั้งค่า: ใส่ค่าจาก Supabase > Project Settings > API =====
 const SUPABASE_URL = "https://nzwdfmgshvufcschtzro.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_k-y1rUJ9sWJ6dhR5IfGsdQ_GQR52W5L"; // ใช้ anon key เท่านั้น ห้ามใส่ service_role
+const SUPABASE_ANON_KEY = "sb_publishable_k-y1rUJ9sWJ6dhR5IfGsdQ_GQR52W5L"   // ใช้ anon key เท่านั้น ห้ามใส่ service_role
 // =================================================================
 
 const NOT_CONFIGURED = SUPABASE_URL.includes("YOUR-PROJECT") || SUPABASE_ANON_KEY.startsWith("YOUR-");
@@ -209,7 +220,10 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const num = n => Number(n).toLocaleString("th-TH");
-const stat = i => i.qty <= 0 ? "out" : i.qty <= i.min_qty ? "low" : "ok";
+const isNone = i => i.qty <= 0 && !(i.min_qty > 0);
+const stat = i => i.qty <= 0 ? (i.min_qty > 0 ? "out" : "ok") : i.qty <= i.min_qty ? "low" : "ok";
+let listAll = false;
+const LIST_LIMIT = 150;
 let shop = null, allItems = [], items = [], logs = [], mv = null, signup = false, channel = null, started = false, busy = false;
 
 /* ---------- Auth ---------- */
@@ -280,29 +294,35 @@ document.querySelectorAll(".tab").forEach(b => b.onclick = () => {
   ["dash","stock","log","team"].forEach(k => $("#" + k).hidden = b.dataset.t !== k);
   if (b.dataset.t === "team") renderTeam();
 });
-["q","flt","showOff"].forEach(i => $("#" + i).oninput = renderList);
+["q","flt","showOff"].forEach(i => $("#" + i).oninput = () => { listAll = false; renderList(); });
 ["lq","lt"].forEach(i => $("#" + i).oninput = renderLog);
 
 function renderAlert() {
-  const low = items.filter(i => stat(i) !== "ok"), ex = items.filter(i => expState(i) !== "ok");
-  const a = $("#alert"), n = low.length + ex.length;
-  document.title = (n ? "(" + n + ") " : "") + "ระบบจัดการสต็อก";
-  if (!n) { a.style.display = "none"; return; }
+  const c = f => items.filter(i => passFilter(i, f)).length;
+  const chips = [["out", "er", "สต็อกหมด", c("out")], ["low", "wn", "ใกล้หมด", c("low")], ["expd", "er", "หมดอายุแล้ว", c("expd")], ["exps", "wn", "ใกล้หมดอายุ", c("exps")]].filter(x => x[3] > 0);
+  const n = c("alert") + c("exp"), a = $("#alert");
+  document.title = (n ? "(" + n + ") " : "") + "ระบบจัดการสต็อกยา";
+  if (!chips.length) { a.style.display = "none"; return; }
   a.style.display = "block";
-  a.innerHTML = (low.length ? "<b>⚠️ สินค้าใกล้หมด/หมด " + low.length + " รายการ</b>" + low.map(i => esc(i.name) + " — เหลือ " + num(i.qty) + " " + esc(i.unit) + (i.qty <= 0 ? " (หมด)" : " (ขั้นต่ำ " + num(i.min_qty) + ")")).join("<br>") : "")
-    + (ex.length ? (low.length ? "<br>" : "") + "<b>⏰ ยาใกล้หมดอายุ/หมดอายุ " + ex.length + " รายการ</b>" + ex.map(i => esc(i.name) + " — " + esc(expSummary(i))).join("<br>") : "");
+  a.innerHTML = '<div class="alert-row"><span class="al-title">⚠️ ต้องดูแล</span>' + chips.map(([f, k, t, v]) => `<button class="chip ${k}" data-go="${f}">${t} <b>${num(v)}</b></button>`).join("") + '<span class="al-hint">กดเพื่อดูรายการ</span></div>';
 }
 function renderList() {
   const newIn = (set => i => set.has(i.id))(new Set(logs.filter(l => l.type === "in" && l.note !== "ยอดเริ่มต้น" && Date.now() - new Date(l.created_at) < 7 * 864e5).map(l => l.item_id)));
   const q = $("#q").value.trim().toLowerCase(), f = $("#flt").value;
-  const r = ($("#showOff").checked ? allItems : items).filter(i => (!q || (i.name + " " + (i.sku || "") + " " + (i.location || "")).toLowerCase().includes(q)) && (f === "all" || (f === "exp" ? expState(i) !== "ok" : stat(i) !== "ok")));
-  $("#list").innerHTML = r.length ? r.map(i => { const s = stat(i);
-    return `<div class="card st-${s}"><div class="nm"><b>${esc(i.name)}${i.active === false ? " (ปิดใช้งาน)" : ""}</b>${newIn(i) ? ' <span class="badge ok">รับเข้าใหม่</span>' : ""}<small>${esc(i.sku) || "-"} · แจ้งเตือน ≤ ${num(i.min_qty)}</small>${locLine(i)}${expLine(i)}</div>
-    <span class="badge ${s}">${s === "ok" ? "ปกติ" : s === "low" ? "ใกล้หมด" : "หมด"}</span>
+  const r = ($("#showOff").checked ? allItems : items).filter(i => (!q || (i.name + " " + (i.sku || "") + " " + (i.location || "") + " " + (i.note || "")).toLowerCase().includes(q)) && passFilter(i, f));
+  const shown = listAll ? r : r.slice(0, LIST_LIMIT);
+  $("#list").innerHTML = r.length ? shown.map(i => { const s = stat(i);
+    return `<div class="card st-${isNone(i) ? "none" : s}"><div class="nm"><b>${esc(i.name)}${i.active === false ? " (ปิดใช้งาน)" : ""}</b>${newIn(i) ? ' <span class="badge ok">รับเข้าใหม่</span>' : ""}<small>${esc(i.sku) || "-"}${i.min_qty > 0 ? " · แจ้งเตือน ≤ " + num(i.min_qty) : ""}</small>${locLine(i)}${noteLine(i)}${expLine(i)}</div>
+    <span class="badge ${isNone(i) ? "none" : s}">${s === "ok" ? (isNone(i) ? "ไม่มีของ" : "ปกติ") : s === "low" ? "ใกล้หมด" : "หมด"}</span>
     <div class="qty">${num(i.qty)} <small style="font-size:12px;font-weight:400">${esc(i.unit)}</small></div>
-    <div class="act">${i.active === false ? "" : `<button data-m="in" data-id="${i.id}">+ รับเข้า</button><button data-m="out" data-id="${i.id}">− จ่ายออก</button>${isOwner() ? `<button data-m="adjust" data-id="${i.id}">ปรับยอด</button>` : ""}`}<button data-m="qr" data-id="${i.id}">QR</button>${isOwner() ? `<button data-m="edit" data-id="${i.id}">✎ แก้ไข</button>` : ""}</div></div>`; }).join("")
+    <div class="act">${i.active === false ? "" : `<button data-m="in" data-id="${i.id}">+ รับเข้า</button><button data-m="out" data-id="${i.id}">− จ่ายออก</button>${isOwner() ? `<button data-m="adjust" data-id="${i.id}">ปรับยอด</button>` : ""}${hasExpired(i) ? `<button data-m="writeoff" data-id="${i.id}">🗑 ตัดยาหมดอายุ</button>` : ""}`}<button data-m="qr" data-id="${i.id}">QR</button>${isOwner() ? `<button data-m="edit" data-id="${i.id}">✎ แก้ไข</button>` : ""}</div></div>`; }).join("")
     : `<div class="msg">${items.length ? "ไม่พบสินค้า" : "ยังไม่มีสินค้า กด “+ เพิ่มสินค้า” เพื่อเริ่มต้น"}</div>`;
   $("#list").querySelectorAll("button").forEach(b => b.onclick = () => b.dataset.m === "edit" ? openEdit(b.dataset.id) : b.dataset.m === "qr" ? openQR(b.dataset.id) : openMove(b.dataset.id, b.dataset.m));
+  $("#list").insertAdjacentHTML("afterbegin", `<div class="leg" style="margin:0 0 8px">พบ ${num(r.length)} รายการ</div>`);
+  if (r.length > shown.length) {
+    $("#list").insertAdjacentHTML("beforeend", `<div class="msg"><button id="moreBtn">แสดงทั้งหมด ${num(r.length)} รายการ (ตอนนี้แสดง ${num(shown.length)})</button></div>`);
+    $("#moreBtn").onclick = () => { listAll = true; renderList(); };
+  }
 }
 const sgn = l => l.type === "adjust" ? (l.delta >= 0 ? 1 : -1) : l.type === "in" ? 1 : -1;
 const tl = t => t === "in" ? "รับเข้า" : t === "out" ? "จ่ายออก" : "ปรับยอด";
@@ -337,43 +357,44 @@ function renderDash() {
   logs.forEach(l => { if (l.type === "out" && new Date(l.created_at) >= since) outBy[l.item_name] = (outBy[l.item_name] || 0) + l.qty; });
   const top = Object.entries(outBy).sort((a, b) => b[1] - a[1]).slice(0, 5);
   const topMax = top.length ? top[0][1] : 1;
-  const bad = items.filter(i => stat(i) !== "ok").sort((a, b) => a.qty - b.qty).slice(0, 8);
+  const badAll = items.filter(i => stat(i) !== "ok"), exAll = items.filter(i => expState(i) !== "ok").length;
+  const bad = badAll.slice().sort((a, b) => (a.qty / (a.min_qty || 1)) - (b.qty / (b.min_qty || 1)) || a.name.localeCompare(b.name)).slice(0, 8);
   const exl = items.filter(i => minExp(i) !== "9999").sort((x, y) => minExp(x).localeCompare(minExp(y))).slice(0, 8);
   const recent = logs.filter(l => l.type === "in").slice(0, 8);
   $("#dash").innerHTML = `
     <div class="kpis">
       <div class="kpi"><small>รายการสินค้า</small><b>${num(items.length)}</b></div>
-      <div class="kpi"><small>จำนวนคงเหลือรวม</small><b>${num(units)}</b></div>
-      <div class="kpi low"><small>ใกล้หมด</small><b>${num(low)}</b></div>
-      <div class="kpi out"><small>หมดแล้ว</small><b>${num(out)}</b></div>
-      <div class="kpi low"><small>ใกล้หมดอายุ</small><b>${num(items.filter(i => expState(i) === "low").length)}</b><small>${expQtySum("low")}</small></div>
-      <div class="kpi out"><small>หมดอายุแล้ว</small><b>${num(items.filter(i => expState(i) === "out").length)}</b><small>${expQtySum("out")}</small></div>
+      <div class="kpi"><small>รายการที่มีของ</small><b>${num(items.filter(i => i.qty > 0).length)}</b></div>
+      <div class="kpi low go" data-go="low"><small>ใกล้หมด</small><b>${num(low)}</b></div>
+      <div class="kpi out go" data-go="out"><small>หมดแล้ว</small><b>${num(out)}</b></div>
+      <div class="kpi low go" data-go="exps"><small>ใกล้หมดอายุ</small><b>${num(items.filter(i => expState(i) === "low").length)}</b><small>${expQtySum("low")}</small></div>
+      <div class="kpi out go" data-go="expd"><small>หมดอายุแล้ว</small><b>${num(items.filter(i => expState(i) === "out").length)}</b><small>${expQtySum("out")}</small></div>
       <div class="kpi up"><small>รับเข้าวันนี้</small><b>+${num(today.i)}</b></div>
       <div class="kpi dn"><small>จ่ายออกวันนี้</small><b>−${num(today.o)}</b></div>
     </div>
     <div class="panel"><h3>รับเข้า / จ่ายออก 7 วันล่าสุด</h3>
-      <div class="chart">${days.map(d => `<div class="col"><div class="bars"><i class="b gi" style="height:${d.i / max * 100}%" title="รับเข้า ${d.i}"></i><i class="b go" style="height:${d.o / max * 100}%" title="จ่ายออก ${d.o}"></i></div><small>${d.label}</small></div>`).join("")}</div>
+      ${days.every(d => !d.i && !d.o) ? '<div class="msg">ยังไม่มีการรับเข้า/จ่ายออกใน 7 วันล่าสุด</div>' : ""}<div class="chart"${days.every(d => !d.i && !d.o) ? " hidden" : ""}>${days.map(d => `<div class="col"><div class="bars"><i class="b gi" style="height:${d.i / max * 100}%" title="รับเข้า ${d.i}"></i><i class="b go" style="height:${d.o / max * 100}%" title="จ่ายออก ${d.o}"></i></div><small>${d.label}</small></div>`).join("")}</div>
       <div class="leg"><i style="background:var(--ok)"></i>รับเข้า<i style="background:var(--er)"></i>จ่ายออก</div></div>
     <div class="two">
       <div class="panel"><h3>จ่ายออกมากสุด 30 วัน</h3>${top.length ? top.map(([n, q]) => `<div class="trow"><span>${esc(n)}</span><div class="tbar"><i style="width:${q / topMax * 100}%"></i></div><span style="width:auto">${num(q)}</span></div>`).join("") : '<div class="msg">ยังไม่มีข้อมูล</div>'}</div>
-      <div class="panel"><h3>ต้องสั่งเพิ่ม</h3>${bad.length ? bad.map(i => `<div class="trow"><span>${esc(i.name)}</span><span class="badge ${stat(i)}" style="width:auto">${i.qty <= 0 ? "หมด" : "เหลือ " + num(i.qty)}</span></div>`).join("") : '<div class="msg">สต็อกปกติทุกรายการ</div>'}</div>
+      <div class="panel"><h3>ต้องสั่งเพิ่ม <small style="color:var(--mu);font-weight:400">(เรียงตามที่ขาดมากสุด)</small></h3>${bad.length ? bad.map(i => `<div class="trow"><span>${esc(i.name)}</span><span class="badge ${stat(i)}" style="width:auto">${i.qty <= 0 ? "หมด" : "เหลือ " + num(i.qty)}</span></div>`).join("") : '<div class="msg">สต็อกปกติทุกรายการ</div>'}${badAll.length > bad.length ? `<div class="leg"><a href="#" data-go="alert">ดูทั้งหมด ${num(badAll.length)} รายการ →</a></div>` : ""}</div>
     </div>
     <div class="two">
-      <div class="panel"><h3>วันหมดอายุที่ใกล้ที่สุด</h3>${exl.length ? exl.map(i => `<div class="trow"><span>${esc(i.name)}</span><span class="badge ${eState(minExp(i))}" style="width:auto">${esc(nearTxt(i))}</span></div>`).join("") : '<div class="msg">ยังไม่ได้ใส่วันหมดอายุ ไปที่สินค้า กด “✎ แก้ไข” เพื่อใส่</div>'}</div>
+      <div class="panel"><h3>วันหมดอายุที่ใกล้ที่สุด</h3>${exl.length ? exl.map(i => `<div class="trow"><span>${esc(i.name)}</span><span class="badge ${eState(minExp(i))}" style="width:auto">${esc(nearTxt(i))}</span></div>`).join("") : '<div class="msg">ยังไม่ได้ใส่วันหมดอายุ ไปที่สินค้า กด “✎ แก้ไข” เพื่อใส่</div>'}${exAll ? `<div class="leg"><a href="#" data-go="exp">ดูที่หมดอายุ/ใกล้หมดอายุ ${num(exAll)} รายการ →</a></div>` : ""}</div>
       <div class="panel"><h3>ยาที่รับเข้าล่าสุด</h3>${recent.length ? recent.map(l => `<div class="trow"><span>${esc(l.item_name)}</span><span style="width:auto;color:var(--ok)">+${num(l.qty)} ${esc(unitOf(l.item_id))}</span><span style="width:auto;color:var(--mu);font-size:12px">${new Date(l.created_at).toLocaleDateString("th-TH", { day: "numeric", month: "short" })}</span>${l.exp ? `<span class="badge ${eState(l.exp)}" style="width:auto">หมดอายุ ${esc(fmtD(l.exp))}</span>` : ""}</div>`).join("") : '<div class="msg">ยังไม่มีการรับเข้า</div>'}</div>
     </div>
     <div class="leg">ข้อมูลของร้านนี้ เห็นเฉพาะสมาชิกในร้าน</div>`;
 }
 
 /* ---------- Actions ---------- */
-$("#add").onclick = () => { ["nName","nSku"].forEach(i => $("#" + i).value = ""); $("#nQty").value = 0; $("#nE1").value = ""; $("#nE2").value = ""; $("#nQ2").value = 0; $("#nLoc").value = ""; $("#nMin").value = 5; $("#nErr").textContent = ""; $("#dNew").showModal(); };
+$("#add").onclick = () => { ["nName","nSku"].forEach(i => $("#" + i).value = ""); $("#nQty").value = 0; $("#nE1").value = ""; $("#nE2").value = ""; $("#nQ2").value = 0; $("#nLoc").value = ""; $("#nNote").value = ""; $("#nMin").value = 5; $("#nErr").textContent = ""; $("#dNew").showModal(); };
 $("#nCancel").onclick = () => $("#dNew").close();
 $("#nOk").onclick = async () => {
   const name = $("#nName").value.trim(); if (!name) return;
   if (badDate($("#nE1").value) || badDate($("#nE2").value)) { $("#nErr").textContent = DATE_MSG; return; }
   const qty = Math.max(0, Math.floor(+$("#nQty").value || 0));
   $("#nOk").disabled = true;
-  const { data, error } = await sb.from("items").insert({ name, sku: $("#nSku").value.trim() || null, unit: $("#nUnit").value.trim() || "ชิ้น", min_qty: Math.max(0, Math.floor(+$("#nMin").value || 0)), location: $("#nLoc").value.trim() || null, exp1: $("#nE1").value || null, exp2: $("#nE2").value || null }).select().single();
+  const { data, error } = await sb.from("items").insert({ name, sku: $("#nSku").value.trim() || null, unit: $("#nUnit").value.trim() || "ชิ้น", min_qty: Math.max(0, Math.floor(+$("#nMin").value || 0)), location: $("#nLoc").value.trim() || null, note: $("#nNote").value.trim() || null, exp1: $("#nE1").value || null, exp2: $("#nE2").value || null }).select().single();
   if (!error) {
     const q2 = Math.max(0, Math.floor(+$("#nQ2").value || 0));
     if (qty > 0) await sb.rpc("move_stock", { p_item: data.id, p_type: "in", p_qty: qty, p_note: "ยอดเริ่มต้น", p_exp: $("#nE1").value || null });
@@ -386,25 +407,28 @@ $("#nOk").onclick = async () => {
 
 function openMove(id, type) {
   const i = items.find(x => x.id === id); if (!i) return; mv = { id, type };
-  $("#mTitle").textContent = (type === "in" ? "รับเข้า: " : type === "out" ? "จ่ายออก: " : "ปรับยอด (ตรวจนับ): ") + i.name;
-  const adj = type === "adjust";
-  $("#mQtyL").textContent = adj ? "จำนวนที่นับได้จริง" : "จำนวน"; $("#mReasonW").hidden = !adj; $("#mExpW").hidden = type !== "in"; $("#mExp").value = ""; $("#mQty").min = adj ? 0 : 1;
+  $("#mTitle").textContent = (type === "in" ? "รับเข้า: " : type === "out" ? "จ่ายออก: " : type === "writeoff" ? "ตัดยาหมดอายุ: " : "ปรับยอด (ตรวจนับ): ") + i.name;
+  const adj = type === "adjust", wo = type === "writeoff";
+  $("#mQtyL").textContent = adj ? "จำนวนที่นับได้จริง" : wo ? "จำนวนที่หมดอายุและจะตัดออก (ใส่ 0 = ล้างวันหมดอายุอย่างเดียว)" : "จำนวน"; $("#mReasonW").hidden = !adj; $("#mExpW").hidden = type !== "in"; $("#mExp").value = ""; $("#mQty").min = adj || wo ? 0 : 1;
   $("#mCur").textContent = "คงเหลือ " + num(i.qty) + " " + i.unit;
   $("#mQty").value = ""; $("#mNote").value = ""; $("#mErr").textContent = "";
+  if (wo) $("#mQty").value = lots(i).filter(l => eState(l.d) === "out").reduce((a, l) => a + l.q, 0) || "";
   $("#dMove").showModal(); setTimeout(() => $("#mQty").focus(), 50);
 }
 $("#mCancel").onclick = () => $("#dMove").close();
 $("#mOk").onclick = async () => {
-  const raw = $("#mQty").value, n = Math.floor(+raw), adj = mv.type === "adjust";
-  if (raw === "" || !(adj ? n >= 0 : n > 0)) { $("#mErr").textContent = adj ? "กรุณาใส่จำนวนที่นับได้ (0 ขึ้นไป)" : "กรุณาใส่จำนวนที่มากกว่า 0"; return; }
+  const raw = $("#mQty").value, n = Math.floor(+raw), adj = mv.type === "adjust", wo = mv.type === "writeoff";
+  if (raw === "" || !(adj || wo ? n >= 0 : n > 0)) { $("#mErr").textContent = adj ? "กรุณาใส่จำนวนที่นับได้ (0 ขึ้นไป)" : wo ? "กรุณาใส่จำนวนที่หมดอายุ (0 ขึ้นไป)" : "กรุณาใส่จำนวนที่มากกว่า 0"; return; }
   if (badDate($("#mExp").value)) { $("#mErr").textContent = DATE_MSG; return; }
   $("#mOk").disabled = true;
   const note = $("#mNote").value.trim();
-  const { error } = adj
+  const { error } = wo
+    ? await sb.rpc("writeoff_expired", { p_item: mv.id, p_qty: n, p_note: note })
+    : adj
     ? await sb.rpc("adjust_stock", { p_item: mv.id, p_new_qty: n, p_reason: $("#mReason").value, p_note: note })
     : await sb.rpc("move_stock", { p_item: mv.id, p_type: mv.type, p_qty: n, p_note: note, p_exp: mv.type === "in" && $("#mExp").value ? $("#mExp").value : null });
   $("#mOk").disabled = false;
-  if (error) { $("#mErr").textContent = error.message.includes("insufficient") ? "สต็อกไม่พอ" : error.message.includes("no change") ? "ยอดที่นับได้เท่ากับยอดในระบบ ไม่ต้องปรับ" : error.message; return; }
+  if (error) { $("#mErr").textContent = error.message.includes("insufficient") ? "สต็อกไม่พอ" : error.message.includes("exceeds") ? "จำนวนที่ตัดมากกว่ายาหมดอายุที่ระบบรู้ ตรวจจำนวนล็อตที่ยังไม่หมดอายุในหน้าแก้ไขสินค้า" : error.message.includes("no change") ? "ยอดที่นับได้เท่ากับยอดในระบบ ไม่ต้องปรับ" : error.message; return; }
   $("#dMove").close(); load();
 };
 
@@ -416,11 +440,12 @@ document.querySelectorAll('input[type=date]').forEach(el => { const n = new Date
 function dleft(d) { if (!d) return null; const t = new Date(); t.setHours(0, 0, 0, 0); return Math.round((new Date(d + "T00:00:00") - t) / 86400000); }
 const eState = d => { const n = dleft(d); return n === null ? "ok" : n < 0 ? "out" : n <= EXP_WARN ? "low" : "ok"; };
 const eRank = { ok: 0, low: 1, out: 2 };
-const expState = i => [i.exp1, i.exp2].map(eState).reduce((a, b) => eRank[b] > eRank[a] ? b : a, "ok");
-const minExp = i => [i.exp1, i.exp2].filter(Boolean).sort()[0] || "9999";
+const expState = i => lots(i).map(l => eState(l.d)).reduce((a, b) => eRank[b] > eRank[a] ? b : a, "ok");
+const minExp = i => lots(i).map(l => l.d).sort()[0] || "9999";
 const fmtD = d => d ? new Date(d + "T00:00:00").toLocaleDateString("th-TH", { day: "numeric", month: "short", year: "numeric" }) : "-";
 function expTxt(d) { const st = eState(d), n = dleft(d); return fmtD(d) + (badDate(d) ? " ⚠️ ตรวจปี" : "") + (st === "out" ? " (หมดอายุแล้ว)" : st === "low" ? " (อีก " + n + " วัน)" : ""); }
-const lots = i => [{ n: 1, d: i.exp1, q: i.lot1_qty || 0 }, { n: 2, d: i.exp2, q: i.lot2_qty || 0 }].filter(l => l.d);
+const lots = i => i.qty > 0 ? [{ n: 1, d: i.exp1, q: i.lot1_qty || 0 }, { n: 2, d: i.exp2, q: i.lot2_qty || 0 }].filter(l => l.d) : [];
+const hasExpired = i => lots(i).some(l => eState(l.d) === "out");
 const qtxt = (l, u) => l.q > 0 ? " · " + num(l.q) + " " + u : "";
 const expSummary = i => lots(i).filter(l => eState(l.d) !== "ok").map(l => "ล็อต " + l.n + " " + expTxt(l.d) + qtxt(l, i.unit)).join(", ");
 const nearTxt = i => { const l = lots(i).sort((x, y) => x.d.localeCompare(y.d))[0]; return expTxt(l.d) + qtxt(l, i.unit); };
@@ -431,6 +456,7 @@ function expQtySum(state) {
   const e = Object.entries(m).map(([u, q]) => num(q) + " " + u);
   return e.length ? "รวม " + e.join(" · ") : "";
 }
+const noteLine = i => i.note ? `<small>📝 ${esc(i.note)}</small>` : "";
 const locLine = i => i.location ? `<small>📍 ${esc(i.location)}</small>` : "";
 const expLine = i => lots(i).length ? `<small>หมดอายุ: ${lots(i).map(l => `ล็อต ${l.n} <span class="${eState(l.d)}-t">${expTxt(l.d)}${qtxt(l, i.unit)}</span>`).join(" · ")}</small>` : "";
 
@@ -492,11 +518,30 @@ async function renderTeam() {
   el.querySelectorAll("[data-rm]").forEach(b => b.onclick = async () => { if (!confirm("ลบสมาชิกคนนี้ออกจากร้าน?")) return; const r = await sb.rpc("remove_member", { p_user: b.dataset.rm }); if (r.error) { alert(r.error.message); return; } renderTeam(); });
 }
 
+/* ---------- Filter / shortcuts ---------- */
+function passFilter(i, f) {
+  switch (f) {
+    case "alert": return stat(i) !== "ok";
+    case "out": return stat(i) === "out";
+    case "low": return stat(i) === "low";
+    case "exp": return expState(i) !== "ok";
+    case "expd": return expState(i) === "out";
+    case "exps": return expState(i) === "low";
+    default: return true;
+  }
+}
+function goStock(f) {
+  document.querySelector('.tab[data-t="stock"]').click();
+  $("#flt").value = f; $("#q").value = ""; listAll = false; renderList();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+document.addEventListener("click", e => { const g = e.target.closest("[data-go]"); if (g) { e.preventDefault(); goStock(g.dataset.go); } });
+
 /* ---------- Edit / archive ---------- */
 let editId = null;
 function openEdit(id) {
   const i = allItems.find(x => x.id === id); if (!i) return; editId = id;
-  $("#eName").value = i.name; $("#eSku").value = i.sku || ""; if (![...$("#eUnit").options].some(o => o.value === i.unit)) $("#eUnit").add(new Option(i.unit, i.unit)); $("#eUnit").value = i.unit; $("#eMin").value = i.min_qty; $("#eLoc").value = i.location || ""; $("#eE1").value = i.exp1 || ""; $("#eQ1").value = i.lot1_qty || 0; $("#eQ2").value = i.lot2_qty || 0; $("#eE2").value = i.exp2 || ""; $("#eErr").textContent = "";
+  $("#eName").value = i.name; $("#eSku").value = i.sku || ""; if (![...$("#eUnit").options].some(o => o.value === i.unit)) $("#eUnit").add(new Option(i.unit, i.unit)); $("#eUnit").value = i.unit; $("#eMin").value = i.min_qty; $("#eLoc").value = i.location || ""; $("#eNote").value = i.note || ""; $("#eE1").value = i.exp1 || ""; $("#eQ1").value = i.lot1_qty || 0; $("#eQ2").value = i.lot2_qty || 0; $("#eE2").value = i.exp2 || ""; $("#eErr").textContent = "";
   $("#eToggle").textContent = i.active === false ? "เปิดใช้งานอีกครั้ง" : "ปิดใช้งานสินค้า";
   $("#dEdit").showModal();
 }
@@ -514,7 +559,7 @@ $("#eOk").onclick = () => {
   if (badDate($("#eE1").value) || badDate($("#eE2").value)) { $("#eErr").textContent = DATE_MSG; return; }
   const q1 = $("#eE1").value ? Math.max(0, Math.floor(+$("#eQ1").value || 0)) : 0, q2 = $("#eE2").value ? Math.max(0, Math.floor(+$("#eQ2").value || 0)) : 0, cur = allItems.find(x => x.id === editId);
   if (cur && q1 + q2 > cur.qty) { $("#eErr").textContent = "จำนวนสองล็อตรวมกัน (" + (q1 + q2) + ") เกินยอดคงเหลือ (" + cur.qty + ")"; return; }
-  saveEdit({ name, sku: $("#eSku").value.trim() || null, unit: $("#eUnit").value.trim() || "ชิ้น", min_qty: Math.max(0, Math.floor(+$("#eMin").value || 0)), location: $("#eLoc").value.trim() || null, exp1: $("#eE1").value || null, exp2: $("#eE2").value || null, lot1_qty: q1, lot2_qty: q2 });
+  saveEdit({ name, sku: $("#eSku").value.trim() || null, unit: $("#eUnit").value.trim() || "ชิ้น", min_qty: Math.max(0, Math.floor(+$("#eMin").value || 0)), location: $("#eLoc").value.trim() || null, note: $("#eNote").value.trim() || null, exp1: $("#eE1").value || null, exp2: $("#eE2").value || null, lot1_qty: q1, lot2_qty: q2 });
 };
 $("#eToggle").onclick = () => {
   const i = allItems.find(x => x.id === editId), on = i.active !== false;
@@ -538,8 +583,8 @@ function downloadCSV(name, rows) {
 }
 const stamp = () => new Date().toISOString().slice(0, 10);
 $("#expStock").onclick = () => downloadCSV("stock-" + stamp() + ".csv",
-  [["ชื่อสินค้า", "รหัส", "หน่วย", "คงเหลือ", "ขั้นต่ำ", "สถานะ", "การใช้งาน", "หมดอายุล็อต 1", "จำนวนล็อต 1", "หมดอายุล็อต 2", "จำนวนล็อต 2", "ตำแหน่ง"],
-   ...allItems.map(i => [i.name, i.sku || "", i.unit, i.qty, i.min_qty, { ok: "ปกติ", low: "ใกล้หมด", out: "หมด" }[stat(i)], i.active === false ? "ปิด" : "ใช้งาน", i.exp1 || "", i.lot1_qty || 0, i.exp2 || "", i.lot2_qty || 0, i.location || ""])]);
+  [["ชื่อสินค้า", "รหัส", "หน่วย", "คงเหลือ", "ขั้นต่ำ", "สถานะ", "การใช้งาน", "หมดอายุล็อต 1", "จำนวนล็อต 1", "หมดอายุล็อต 2", "จำนวนล็อต 2", "ตำแหน่ง", "หมายเหตุ"],
+   ...allItems.map(i => [i.name, i.sku || "", i.unit, i.qty, i.min_qty, { ok: "ปกติ", low: "ใกล้หมด", out: "หมด" }[stat(i)], i.active === false ? "ปิด" : "ใช้งาน", i.exp1 || "", i.lot1_qty || 0, i.exp2 || "", i.lot2_qty || 0, i.location || "", i.note || ""])]);
 $("#expLog").onclick = () => downloadCSV("stock-log-" + stamp() + ".csv",
   [["วันเวลา", "สินค้า", "ประเภท", "จำนวน(+/−)", "คงเหลือหลังทำรายการ", "ผู้ทำรายการ", "หมายเหตุ", "หมดอายุล็อตที่รับเข้า"],
    ...filteredLogs().map(l => [new Date(l.created_at).toLocaleString("th-TH"), l.item_name, tl(l.type), sgn(l) * l.qty, l.after_qty, l.by_name || l.by_email || "", l.note || "", l.exp || ""])]);
